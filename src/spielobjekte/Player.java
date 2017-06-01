@@ -53,7 +53,36 @@ public class Player extends GameObject{
 		//Iterates through every object in game to check if player collided with it or not and commits proper reaction
 		for (int i=0; i<objectlist.objectList.size(); i++){
 			GameObject currentObject = objectlist.objectList.get(i);
-		//From here: collision- handling for default block  	
+		//From here: collision- handling for pushable block  	
+			//Right Collision
+		if (currentObject.getId()== 10 && getBoundsRight().intersects(currentObject.getBounds())){
+			x_pos = currentObject.getX_pos()-64;
+			if (currentObject.isMoveable()==true){
+				currentObject.setX_pos(currentObject.getX_pos()+1);
+				}
+			}
+		
+			//left Collision
+		if (currentObject.getId()== 10 && getBoundsLeft().
+			intersects(currentObject.getBounds())){x_pos = currentObject.getX_pos()+45;
+			if (currentObject.isMoveable()==true){
+				currentObject.setX_pos(currentObject.getX_pos()-1);
+			}
+		}
+			//Top Collision
+		if (currentObject.getId()== 10 && getBoundsBottom().intersects(currentObject.getBounds())){
+				vel_y = 0;
+				falling = false;
+				jumping = false;
+			}
+			else{
+				falling = true;
+			}
+		}
+		
+		for (int i=0; i<objectlist.objectList.size(); i++){
+			GameObject currentObject = objectlist.objectList.get(i);
+		//From here: collision- handling for default block 
 		if (currentObject.getId()== 2 && getBoundsTop().intersects(currentObject.getBounds())){
 			y_pos = currentObject.getY_pos() + (height/2)-5;
 			vel_y=0;
@@ -93,8 +122,8 @@ public class Player extends GameObject{
 		Graphics2D g2d = (Graphics2D) g;
 		g.setColor(Color.red);
 		g2d.draw(getBoundsBottom());
-		g2d.draw(getBoundsRight());
-		g2d.draw(getBoundsLeft());
+		g2d.fill(getBoundsRight());
+		g2d.fill(getBoundsLeft());
 		g2d.draw(getBoundsTop());
 	}
 

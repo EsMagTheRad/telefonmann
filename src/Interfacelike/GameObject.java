@@ -13,7 +13,7 @@ public abstract class GameObject {
 	protected float y_pos;
 	protected int id;
 	protected float vel_x = 0, vel_y = 0;
-	protected boolean falling, jumping, lookingLeft;
+	protected boolean falling, jumping, lookingLeft ,moveable;
 	/**Id List, expand for better documentation
 	 * 1 = player
 	 * 2 = default block
@@ -27,6 +27,7 @@ public abstract class GameObject {
 		this.id = id;
 		falling = true;
 		jumping = true;
+		moveable = true;
 		lookingLeft = true; //Checks if player or an enemy is heading left or right to load the proper image
 	}
 	//Abstract methods
@@ -54,5 +55,7 @@ public abstract class GameObject {
 	public void setJumping(boolean jumping) {this.jumping = jumping;}
 	public boolean isLookingLeft() {return lookingLeft;}
 	public void setLookingLeft(boolean lookingLeft) {this.lookingLeft = lookingLeft;}
-	//public abstract ObjectId getId();
+	public boolean isMoveable(){return moveable;}
+	public void setMoveable (boolean moveable){this.moveable = moveable;}
 }
+

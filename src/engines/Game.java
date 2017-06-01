@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import spielobjekte.DefaultBlock;
 import spielobjekte.Player;
+import spielobjekte.PushBlock;
 
 public class Game extends Canvas implements Runnable{
 
@@ -134,7 +135,7 @@ public class Game extends Canvas implements Runnable{
 				 */
  				if(red == 000 && green == 000 && blue == 255) objectlist.addObject(new Player(i*32, j*32, objectlist, 1)); //Player
 				if(red == 255 && green == 255 && blue == 255) objectlist.addObject(new DefaultBlock(i*32, j*32, 2)); //Blocks
-				//if(red == 255 && green == 255 & blue == 000) handler.addObject(new Buff(i*32, j*32, ObjectId.Buff)); //Stars
+				if(red == 255 && green == 255 & blue == 000) objectlist.addObject(new PushBlock(i*32, j*32, objectlist, 10));
 
 			}
 		}
