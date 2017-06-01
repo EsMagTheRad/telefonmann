@@ -23,7 +23,9 @@ public class Game extends Canvas implements Runnable{
 	private BufferedImage level;
 	private Imageloader loader = new Imageloader(); 
 	private Game_Object_List objectlist;
-	Kamera kamera;
+	private Kamera kamera;
+	
+	
 	public Game(){}
 	
 	public void init() {
@@ -55,10 +57,11 @@ public class Game extends Canvas implements Runnable{
 			
 			//thread sleeps
 			while(timeDiff >= 1){
-				tick();
+				tick(); //Calls the tick() method of the object- list, witch refreshes the objects in the list
 				timeDiff--;
 			}
-			render();
+			draw_frame();
+
 
 		}
 	}
@@ -76,7 +79,7 @@ public class Game extends Canvas implements Runnable{
 
 	}
 	
-	private void render(){
+	private void draw_frame(){
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null)
 		{
@@ -86,7 +89,7 @@ public class Game extends Canvas implements Runnable{
 		
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.fillRect(0, 0, getWidth(), getHeight());//Black background
 		//for Camera
 		Graphics2D g2d = (Graphics2D) g;
 
