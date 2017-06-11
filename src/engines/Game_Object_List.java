@@ -3,6 +3,7 @@ package engines;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import Interfacelike.GameObject;
+import spielobjekte.Player;
 
 public class Game_Object_List {
 	/**
@@ -36,5 +37,16 @@ public class Game_Object_List {
 	//Enemies destroyed and objects consumed (like buffs or coins) will be removed from the scene
 	public void rmObject(GameObject object){ //"rm"... to much shell
 		objectList.remove(object);
+	}
+	public Player fetchPlayer(){
+		Player player = null;
+		for(int i = 0; i < objectList.size(); i++) {
+			currentObject = objectList.get(i);
+			if (currentObject.getId() == 1){
+				player = (Player) currentObject;
+				
+			}
+		}
+		return player;
 	}
 }

@@ -30,4 +30,28 @@ public class DefaultBlock extends GameObject{
 		return new Rectangle((int)x_pos, (int)y_pos, 32, 32);
 	}
 
+	@Override
+	public Rectangle getBoundsBottom() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Rectangle getBoundsTop() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Rectangle getBoundsLeft() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Rectangle getBoundsRight() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

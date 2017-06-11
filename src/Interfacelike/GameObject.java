@@ -11,9 +11,10 @@ public abstract class GameObject {
 	 */
 	protected float x_pos;
 	protected float y_pos;
+	protected float life;
 	protected int id;
 	protected float vel_x = 0, vel_y = 0;
-	protected boolean falling, jumping, lookingLeft ,moveable;
+	protected boolean falling, jumping, lookingLeft ,moveable, restart;
 	/**Id List, expand for better documentation
 	 * 1 = player
 	 * 2 = default block
@@ -34,6 +35,10 @@ public abstract class GameObject {
 	public abstract void refresh(LinkedList<GameObject> object);
 	public abstract void paint(Graphics g);
 	public abstract Rectangle getBounds();
+	public abstract Rectangle getBoundsBottom();
+	public abstract Rectangle getBoundsTop();
+	public abstract Rectangle getBoundsLeft();
+	public abstract Rectangle getBoundsRight();
 	
 	//from here on: auto- generated getter and setters
 	public float getX_pos(){return x_pos;};
@@ -42,7 +47,9 @@ public abstract class GameObject {
 	public void setY_pos(float y){this.y_pos = y;};
 	
 	public int getId(){return id;}
+	public float getLife(){return life;}
 	public void setId(int id){this.id = id;}
+	public void setLife(float f){this.life = f;}
 	
 	public float getVel_X(){return vel_x;};
 	public float getVel_Y(){return vel_y;};
@@ -57,5 +64,7 @@ public abstract class GameObject {
 	public void setLookingLeft(boolean lookingLeft) {this.lookingLeft = lookingLeft;}
 	public boolean isMoveable(){return moveable;}
 	public void setMoveable (boolean moveable){this.moveable = moveable;}
+	public void setRestart(boolean restart) {this.restart = restart;}
+	public boolean getRestart(){return restart;}
 }
 
