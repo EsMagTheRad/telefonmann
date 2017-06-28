@@ -16,7 +16,7 @@ public class Player extends GameObject{
 	private float width, height; //may need: width_jump, height_jump, width_crouch, height_crouch etc
 	private float gravity = 0.4f;	
 	private float max_speed = 8f;
-	private int points = 0, bullets = 10;
+	private int points = 0, maxPoints = 0, bullets = 10;
 	
 	private Game_Object_List objectlist;
 	private Game_Object_List attacklist = new Game_Object_List();
@@ -156,14 +156,14 @@ public class Player extends GameObject{
 			g.drawString(("ESC to restart "), (int)this.getX_pos()-360, (int)this.getY_pos()-255);
 			g.drawString(("SPACE = Schuss: " +  bullets), (int)this.getX_pos()-80, (int)this.getY_pos()-275);
 			g.fillRect((int)this.getX_pos()-300, (int)this.getY_pos()-290, (int) (life*5), 20);
-			g.drawString(("Score: " +  points + " / 7"), (int)this.getX_pos()+300, (int)this.getY_pos()-275);
+			g.drawString(("Score: " +  points + " / " + maxPoints), (int)this.getX_pos()+300, (int)this.getY_pos()-275);
 		}
 		if(life <= 0){
 			g.drawString(("GAME OVER "), (int)this.getX_pos()-10, (int)this.getY_pos()-20);
 			this.vel_y=0;
 			this.vel_x=0;
 		}
-		if(points >= 7){
+		if(points >= maxPoints){
 			g.drawString(("YOU WIN!!!!! "), (int)this.getX_pos()-10, (int)this.getY_pos()-20);
 			this.vel_y=0;
 			this.vel_x=0;
@@ -234,13 +234,16 @@ public class Player extends GameObject{
 		if (bullets > 0){
 			
 			if (lookingLeft == true){
-			attacklist.addObject(new Attack(this.x_pos,this.y_pos+height/2,6, -4));
+			attacklist.addObject(new Attack(this.x_pos,this.y_pos+height/2,6, -4, 0));
 			bullets+=-1;
 			} else
-				attacklist.addObject(new Attack(this.x_pos+width,this.y_pos+height/2,6, 4));
+				attacklist.addObject(new Attack(this.x_pos+width,this.y_pos+height/2,6, 4, 0));
 			bullets+=-1;
 			}
 		}
+	public void setMaxPoints(int maxPoints){
+		this.maxPoints = maxPoints;
+	}
 	}
 
 

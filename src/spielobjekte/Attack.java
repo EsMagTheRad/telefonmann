@@ -11,19 +11,21 @@ import engines.Imageloader;
 public class Attack extends GameObject{
 	private BufferedImage image;
 	private Imageloader loader = new Imageloader();
-	private int direction;
+	private int direction_x, direction_y;
 	
-	public Attack(float x_pos, float y_pos, int id, int direction) {
+	public Attack(float x_pos, float y_pos, int id, int direction_x, int direction_y) {
 		super(x_pos, y_pos, id);
 		image = loader.loadImage("/fire.png");
-		this.direction = direction;
+		this.direction_x = direction_x;
+		this.direction_y = direction_y;
 	}
 
 	@Override
 	public void refresh(LinkedList<GameObject> objectList) {
 	}
 	public void move(boolean left){
-		setX_pos(x_pos+direction);
+		setX_pos(x_pos+direction_x);
+		setY_pos(y_pos+direction_y);
 	}
 
 	@Override

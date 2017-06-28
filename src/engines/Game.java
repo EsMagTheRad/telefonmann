@@ -22,7 +22,6 @@ public class Game extends Canvas implements Runnable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
 	private boolean running = false;
 	private Thread thread;
 	public static int WIDTH;
@@ -31,6 +30,7 @@ public class Game extends Canvas implements Runnable{
 	private Imageloader loader = new Imageloader(); 
 	private Game_Object_List objectlist;
 	private Kamera kamera;
+	private int points = 0;
 	
 	
 	public Game(){}
@@ -44,6 +44,7 @@ public class Game extends Canvas implements Runnable{
 		
 		loadLevel(level);
 		this.addKeyListener(new Keyreader(objectlist));
+
 	}
 
 	/**Creates game- loop using a thread
@@ -82,6 +83,8 @@ public class Game extends Canvas implements Runnable{
 	
 	private void draw_frame(){
 		GameObject player = objectlist.fetchPlayer();
+		Player thePlayer  = (Player)player;
+		thePlayer.setMaxPoints(points);
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null)
 		{
@@ -137,33 +140,42 @@ public class Game extends Canvas implements Runnable{
 		int height = image.getHeight();
 
 		for(int i = 0; i < width;i++){
-			for(int j = 0; j < height; j++){
-				int pixel = image.getRGB(i, j);
-				int red = (pixel >> 16) & 0xff;;
-				int green = (pixel >> 8) & 0xff;
-				int blue = (pixel) & 0xff;
+			for(int j = 0; j < height; j++){		
+				// Adds a DefaultBlock- Object to the List, if its associated color is detected in the image
+				if(image.getRGB(i, j) == -1) 
+					objectlist.addObject(new DefaultBlock(i*32, j*32, 2)); 
+				// Adds a Enemy- Object to the List, if its associated color is detected in the image
+				if(image.getRGB(i, j) == -256) 
+					objectlist.addObject(new Enemy(i*32, (j*32)-32, objectlist, 3, 2)); 
+				// Adds a Pushblock- Object to the List, if its associated color is detected in the image
+				if(image.getRGB(i, j)== -14254336) 
+					objectlist.addObject(new PushBlock(i*32, (j*32)-32, objectlist, 10)); 
+				// Adds a Wallcreeper- Object to the List, if its associated color is detected in the image
+				if(image.getRGB(i, j) == -65536) 
+					objectlist.addObject(new Wallcreeper(i*32, j*32, objectlist, 4)); 
+				// Adds a Food- Object to the List, if its associated color is detected in the image
+				if(image.getRGB(i, j) == -16711936) 
+					objectlist.addObject(new Food(i*32, j*32, 6)); 	
+				// Adds a Star- Object to the List, if its associated color is detected in the image
+				if(image.getRGB(i, j) == -65426) {
+					
+					objectlist.addObject(new Star(i*32, j*32, 5));
+					points++;
 				
-				/**
-				 * Adds every game- object to the object- list
-				 */
-				if(red == 255 && green == 255 && blue == 255) objectlist.addObject(new DefaultBlock(i*32, j*32, 2)); //Blocks
-				if(red == 255 && green == 255 & blue == 000) objectlist.addObject(new Enemy(i*32, (j*32)-32, objectlist, 3, 2)); //Enemys
-				if(red == 38 && green == 127 && blue == 000) objectlist.addObject(new PushBlock(i*32, (j*32)-32, objectlist, 10)); //PUSHBLOCK
-				if(red == 255 && green == 000 && blue == 000) objectlist.addObject(new Wallcreeper(i*32, j*32, objectlist, 4)); //Walltraps
-				if(red == 255 && green == 000 && blue == 110) objectlist.addObject(new Star(i*32, j*32, 5)); //Points
-				if(red == 000 && green == 255 && blue == 000) objectlist.addObject(new Food(i*32, j*32, 6)); //Bananas	
+				}
+
 			}
 			}
 		for(int i = 0; i < width;i++){
 			for(int j = 0; j < height; j++){
-				int pixel = image.getRGB(i, j);
-				int red = (pixel >> 16) & 0xff;;
-				int green = (pixel >> 8) & 0xff;
-				int blue = (pixel) & 0xff;
-	
-				if(red == 000 && green == 000 && blue == 255) objectlist.addObject(new Player(i*32, (j*32)-32, objectlist, 1)); //Player
+				/** Adds the Player to the List. Added this snippet separated from the other object- generation code, to assure, that the 
+				 *	Player is drawn last, and thus displayed above all other objects 
+				 */
+				if(image.getRGB(i, j)== -16776961)
+					objectlist.addObject(new Player(i*32, (j*32)-32, objectlist, 1)); //Player
 				}
 			}
+	
 		}
 	
 	

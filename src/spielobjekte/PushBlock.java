@@ -42,15 +42,15 @@ public class PushBlock extends GameObject{
 		for (int i=0; i<objectlist.objectList.size(); i++){
 			GameObject currentObject = objectlist.objectList.get(i);
 			if(currentObject.getId() == 2 && getBoundsRight().intersects(currentObject.getBounds())){
-				setX_pos(currentObject.getX_pos()-32);
+				setX_pos(currentObject.getX_pos()-64);
 			}
 			if(currentObject.getId() == 2 && getBoundsLeft().intersects(currentObject.getBounds())){
 				setX_pos(currentObject.getX_pos()+32);
 			}
-			if(currentObject.getId() == 2 && getBounds().intersects(currentObject.getBounds())){
+			if(currentObject.getId() == 2 && getBoundsBottom().intersects(currentObject.getBounds())){
 				vel_y = 0;
 				setY_pos(currentObject.getY_pos()-64);
-			
+				
 				jumping = false;
 				falling = false;
 				
@@ -61,12 +61,7 @@ public class PushBlock extends GameObject{
 			}
 
 		}
-	public Rectangle getBoundsRight() {
-		return new Rectangle((int)((int)x_pos+62), (int)y_pos+2, (int)5, (int)45);
-	}
-	public Rectangle getBoundsLeft() {
-		return new Rectangle((int)x_pos - 2, (int)y_pos+2, (int)5, (int)45);
-	}
+
 
 	@Override
 	public void paint(Graphics g) {
@@ -75,13 +70,6 @@ public class PushBlock extends GameObject{
 		g.setColor(Color.BLACK);
 		g.drawRect((int)x_pos, (int)y_pos, 64, 64);
 		
-		Graphics2D g2d = (Graphics2D) g;
-		/**
-		g.setColor(Color.red);
-		g2d.fill(getBoundsRight());
-		g2d.fill(getBoundsLeft());
-		g2d.fill(getBoundsTop());
-		*/
 	}
 
 	@Override
@@ -93,12 +81,17 @@ public class PushBlock extends GameObject{
 	@Override
 	public Rectangle getBoundsBottom() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Rectangle((int)x_pos, (int)y_pos +55, (int)64, (int)10);
 	}
 
 	@Override
 	public Rectangle getBoundsTop() {
 		return new Rectangle((int)x_pos, (int)y_pos, (int)64, (int)10);
 	}
-
+	public Rectangle getBoundsRight() {
+		return new Rectangle((int)((int)x_pos+60), (int)y_pos+2, (int)5, (int)45);
+	}
+	public Rectangle getBoundsLeft() {
+		return new Rectangle((int)x_pos, (int)y_pos+2, (int)5, (int)45);
+	}
 }

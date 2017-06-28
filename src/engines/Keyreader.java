@@ -43,7 +43,7 @@ public class Keyreader extends KeyAdapter{
 				if(key == KeyEvent.VK_ESCAPE){
 					player.setRestart(true);
 				}
-				if(key == KeyEvent.VK_ENTER){
+				if(key == KeyEvent.VK_ENTER ){
 					player.attack();
 				}
 			}

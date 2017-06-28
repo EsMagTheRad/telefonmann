@@ -18,25 +18,20 @@ public class Enemy extends GameObject{
 	private float width, height; //may need: width_jump, height_jump, width_crouch, height_crouch etc
 	private float gravity = 0.4f;	
 	private float max_speed =3f;
-	private int life, lifebar = 50;
+	private int life, lifebar = 50, bullets = 1;
 	private boolean hitL = true;
-	
-	private Game_Object_List objectlist;
-	private BufferedImage imageRight;
-	private  BufferedImage imageLeft;
-	private BufferedImage exclamation;
+	private Game_Object_List objectlist, attacklist;
+	private BufferedImage imageLeft, imageRight;
 	private Imageloader loader = new Imageloader();
-	boolean hit = false;
 	float hitX=0, hitY=0;
-	int counter = 0;
 
 	public Enemy(float x_pos, float y_pos, Game_Object_List objectlist, int id, int lifeV) {
 		super(x_pos, y_pos, 3);
 		this.objectlist = objectlist;
+		attacklist = new Game_Object_List();
 		life = lifeV;
-		imageRight = loader.loadImage("/enemy1.png");
-		imageLeft = loader.loadImage("/enemy1.png");
-		exclamation = loader.loadImage("/exclam.png");
+		imageRight = loader.loadImage("/enemy.gif");
+		imageLeft = loader.loadImage("/enemy_1.png");
 		width = imageRight.getWidth();
 		height = imageRight.getWidth();
 		/** In case other images for player-actions will be used in future versions: 
@@ -70,12 +65,10 @@ public class Enemy extends GameObject{
 	}
 	private void killPlayer(GameObject currentObject)
 	{
-		hit = true;
 		currentObject.setY_pos(currentObject.getY_pos()-10);
 		currentObject.setLife(currentObject.getLife()-1);
 		hitX = currentObject.getX_pos()-20;
-		hitY = currentObject.getY_pos()+20;
-		
+		hitY = currentObject.getY_pos()+20;	
 	}
 	
 	public void move()
@@ -176,6 +169,13 @@ public class Enemy extends GameObject{
 								hitL = true;
 							}
 						}
+						/**
+						if(currentObject.getId() == 1){	
+							if(currentObject.getBounds().intersects(LeftTargetRange())||currentObject.getBounds().intersects(RightTargetRange())){
+								attack();
+							}
+						}
+						*/
 					}
 				}
 				//From here: collision- handling for default block  	
@@ -197,15 +197,10 @@ public class Enemy extends GameObject{
 			else if(lookingLeft == true){
 				g.drawImage(imageLeft, (int) x_pos, (int) y_pos, 48, 48, null);
 			}
-		if(hit == true){
-			g.drawImage(exclamation, (int) hitX, (int) hitY, exclamation.getWidth(), exclamation.getWidth(), null);
-			hit = false;
-		}
-		
-		Graphics2D g2d = (Graphics2D) g;
-		g.setColor(Color.red);
-		g.fillRect((int) x_pos, (int) y_pos-20, lifebar, 5);
+
 	}
+	
+	
 
 	/**Methods to create the proper collision bounds of the player**/
 	public Rectangle getBoundsBottom() {
@@ -220,12 +215,32 @@ public class Enemy extends GameObject{
 	public Rectangle getBoundsLeft() {
 		return new Rectangle((int)x_pos+5, (int)y_pos+9, (int)5, (int)height-21);
 	}
+/**	
+	public Rectangle LeftTargetRange() {
+		return new Rectangle((int)x_pos-180, (int)y_pos+9, (int)180, (int)height);
+	}
+	public Rectangle RightTargetRange() {
+		return new Rectangle((int)x_pos+48, (int)y_pos+9, (int)180, (int)height);
+	}
+*/
 
 	@Override
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub
 		return new Rectangle((int) ((int)x_pos+(width/2)-((width/2)/2))+6, (int)y_pos+10, (int)width/3, (int)height/2);
 	}
-
-
-}
+/**
+	public void attack(){
+		 if (bullets <= 0){
+				bullets = 0;
+			}
+		if (bullets > 0){
+				attacklist.addObject(new Attack(this.x_pos+width,this.y_pos+height/2,6, -1, 0));
+				attacklist.addObject(new Attack(this.x_pos,this.y_pos+height/2, 6, 1, 0));
+				attacklist.addObject(new Attack(this.x_pos+width/2,this.y_pos/2,6, 0, 1));
+				attacklist.addObject(new Attack(this.x_pos+width/2,this.y_pos, 6, 0, -1));
+			bullets+=-1;
+			}
+		}
+*/
+	}

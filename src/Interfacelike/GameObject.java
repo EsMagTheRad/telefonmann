@@ -43,8 +43,8 @@ public abstract class GameObject {
 	//from here on: auto- generated getter and setters
 	public float getX_pos(){return x_pos;};
 	public float getY_pos(){return y_pos;};
-	public void setX_pos(float x){this.x_pos = x;};
-	public void setY_pos(float y){this.y_pos = y;};
+	public void setX_pos(float x){this.x_pos = x;}
+	public void setY_pos(float y){this.y_pos = y;}
 	
 	public int getId(){return id;}
 	public float getLife(){return life;}
@@ -53,8 +53,8 @@ public abstract class GameObject {
 	
 	public float getVel_X(){return vel_x;};
 	public float getVel_Y(){return vel_y;};
-	public void setVel_X(float velX){this.vel_x = velX;};
-	public void setVel_Y(float velY){this.vel_y = velY;};
+	public void setVel_X(float velX){this.vel_x = velX;}
+	public void setVel_Y(float velY){this.vel_y = velY;}
 	
 	public boolean isFalling() {return falling;}
 	public void setFalling(boolean falling) {this.falling = falling;}
